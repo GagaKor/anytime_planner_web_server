@@ -7,14 +7,14 @@ import { UserService } from "./user.service";
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-  @Query(() => Boolean)
-  users(@Args("bool") bool: boolean): boolean {
-    return bool;
+  @Query(() => [User])
+  users() : Promise<User[]> {
+    return this.userService.findAll();
   }
 
   @Mutation(() => Boolean)
-  createUser(@Args() createUserDto: CreateUserDto): boolean {
+  createUser(@Args() createUserDto: CreateUserDto): Promise<boolean> {
     console.log(createUserDto);
-    return true;
+    return this.userService.createUser(createUserDto);
   }
 }
