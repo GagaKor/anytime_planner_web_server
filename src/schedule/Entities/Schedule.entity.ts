@@ -17,20 +17,16 @@ export class Schedule {
   title: string;
 
   @Field()
-  @Column()
-  mode: string;
+  @Column({ default: false })
+  repeatingType: boolean;
 
   @Field()
   @Column({ nullable: true })
-  repeat: string;
+  cycle: number;
 
   @Field()
-  @Column()
-  cycle: string;
-
-  @Field()
-  @Column()
-  period: string;
+  @Column({ nullable: true })
+  period: number;
 
   @Field()
   @Column()

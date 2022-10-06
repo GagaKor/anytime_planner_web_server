@@ -17,9 +17,28 @@ export class ScheduleService {
   }
 
   async calculrateSchedule(schedules: Schedule[]) {
-    for (const schedule of schedules) {
-      let { startDate, endDate, repeat, mode } = schedule;
+    let result = [];
+    for (let schedule of schedules) {
+      let { startDate, endDate, repeatingType, cycle, title } = schedule;
+      let cycletime = cycle - 1;
+      let startEndArr = [];
+      let resultDate = { startDate: null, endDate: null };
+      while (startDate < endDate && repeatingType) {
+        if (cycletime > 0) {
+          if (cycletime === cycle - 1) {
+            resultDate.startDate = new Date(startDate);
+          }
+          cycletime--;
+        } else {
+          resultDate.endDate = new Date(startDate);
+          startEndArr.push(resultDate);
+          cycletime = cycle - 1;
+        }
+        startDate.setDate(startDate.getDate() + 1);
+      }
+      result.push({ title, resultData: startEndArr });
     }
+    return result;
   }
 
   async createSchedule(createScheduleDto: CreateScheduleDto) {

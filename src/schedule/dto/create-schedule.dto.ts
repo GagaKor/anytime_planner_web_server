@@ -1,4 +1,4 @@
-import { ArgsType, Field } from "@nestjs/graphql";
+import { ArgsType, Field, Int } from "@nestjs/graphql";
 import { IsDate, IsString } from "class-validator";
 
 @ArgsType()
@@ -12,20 +12,13 @@ export class CreateScheduleDto {
   title: string;
 
   @Field()
-  @IsString()
-  mode: string;
+  repeatingType: boolean;
 
-  @Field()
-  @IsString()
-  repeatingType: string;
+  @Field(() => Int)
+  cycle: number;
 
-  @Field()
-  @IsString()
-  cycle: string;
-
-  @Field()
-  @IsString()
-  period: string;
+  @Field(() => Int)
+  period: number;
 
   @Field()
   @IsDate()

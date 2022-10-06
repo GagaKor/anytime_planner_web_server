@@ -6,15 +6,16 @@ import { UserScheduleDto } from "./dto/user-schedule.dto";
 
 @Resolver(of => Schedule)
 export class ScheduleResolver {
-  constructor(private readonly cheduleService: ScheduleService) {}
+  constructor(private readonly scheduleService: ScheduleService) {}
 
   @Query(() => [Date])
-  findByUser(@Args() userScheduleDto: UserScheduleDto) {
-    return;
+  async findByUser(@Args() userScheduleDto: UserScheduleDto) {
+    const schedules = await this.scheduleService.findByUser(userScheduleDto);
+    return await this.scheduleService.calculrateSchedule(schedules);
   }
 
   @Mutation(() => Boolean)
   createSchedule(@Args() createScheduleDto: CreateScheduleDto): Promise<Schedule> {
-    return this.cheduleService.createSchedule(createScheduleDto);
+    return this.scheduleService.createSchedule(createScheduleDto);
   }
 }
