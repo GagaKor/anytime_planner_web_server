@@ -20,11 +20,11 @@ export class Schedule {
   @Column({ default: false })
   repeatingType: boolean;
 
-  @Field()
+  @Field(() => Int)
   @Column({ nullable: true })
   cycle: number;
 
-  @Field()
+  @Field(() => Int)
   @Column({ nullable: true })
   period: number;
 

@@ -1,21 +1,24 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { Schedule } from "./Entities/Schedule.entity";
 import { ScheduleService } from "./schedule.service";
-import { CreateScheduleDto } from "./dto/create-schedule.dto";
+import { InputSchedule } from "./dto/schedule.input";
 import { UserScheduleDto } from "./dto/user-schedule.dto";
+import { SchduleList } from "./dto/schedule-List";
 
 @Resolver(of => Schedule)
 export class ScheduleResolver {
   constructor(private readonly scheduleService: ScheduleService) {}
 
-  @Query(() => [Date])
-  async findByUser(@Args() userScheduleDto: UserScheduleDto) {
+  @Query(() => [SchduleList])
+  async findByUser(@Args() userScheduleDto: UserScheduleDto): Promise<SchduleList[]> {
     const schedules = await this.scheduleService.findByUser(userScheduleDto);
-    return await this.scheduleService.calculrateSchedule(schedules);
+    const result = await this.scheduleService.calculrateSchedule(schedules);
+    console.log(result);
+    return result;
   }
 
-  @Mutation(() => Boolean)
-  createSchedule(@Args() createScheduleDto: CreateScheduleDto): Promise<Schedule> {
-    return this.scheduleService.createSchedule(createScheduleDto);
+  @Mutation(() => Schedule)
+  createSchedule(@Args("inputSchedule") inputSchedule: InputSchedule): Promise<Schedule> {
+    return this.scheduleService.createSchedule(inputSchedule);
   }
 }
