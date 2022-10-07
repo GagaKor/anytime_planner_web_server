@@ -13,5 +13,5 @@ export class SchduleList {
   title: string;
 
   @Field(type => ResultData)
-  resultData: ResultData[] | null;
+  resultData: ResultData[];
 }

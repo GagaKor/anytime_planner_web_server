@@ -5,6 +5,7 @@ import { Schedule } from "./Entities/Schedule.entity";
 import { InputSchedule } from "./dto/schedule.input";
 import { UserScheduleDto } from "./dto/user-schedule.dto";
 import { SchduleList } from "./dto/schedule-List";
+import { ResultData } from "./dto/schdule-ResultData.model";
 
 @Injectable()
 export class ScheduleService {
@@ -37,9 +38,12 @@ export class ScheduleService {
         }
         startDate.setDate(startDate.getDate() + 1);
       }
-      result.push({ id, username, title, resultData: startEndArr });
+      const resultData: ResultData[] = startEndArr;
+      const scheduleList: SchduleList = { id, username, title, resultData };
+      result.push(scheduleList);
     }
-    return result;
+    const scheduleLists: SchduleList[] = result;
+    return scheduleLists;
   }
 
   async createSchedule(inputSchedule: InputSchedule): Promise<Schedule> {

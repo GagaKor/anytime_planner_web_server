@@ -13,7 +13,6 @@ export class ScheduleResolver {
   async findByUser(@Args() userScheduleDto: UserScheduleDto): Promise<SchduleList[]> {
     const schedules = await this.scheduleService.findByUser(userScheduleDto);
     const result = await this.scheduleService.calculrateSchedule(schedules);
-    console.log(result);
     return result;
   }
 
