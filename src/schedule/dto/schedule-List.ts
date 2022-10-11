@@ -12,6 +12,6 @@ export class SchduleList {
   @Field()
   title: string;
 
-  @Field(type => ResultData)
+  @Field(type => [ResultData])
   resultData: ResultData[];
 }

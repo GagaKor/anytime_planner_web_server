@@ -6,8 +6,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { UserModule } from "./user/user.module";
-import { ScheduleModule } from './schedule/schedule.module';
-
+import { ScheduleModule } from "./schedule/schedule.module";
+import { GraphQLJSON } from "graphql-type-json";
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -16,6 +16,10 @@ import { ScheduleModule } from './schedule/schedule.module';
     GraphQLModule.forRoot({
       autoSchemaFile: true,
       driver: ApolloDriver,
+      buildSchemaOptions: {
+        dateScalarMode: "timestamp",
+        resolvers: { JSON: GraphQLJSON },
+      },
     }),
     TypeOrmModule.forRoot({
       type: "mysql",
