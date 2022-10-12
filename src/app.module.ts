@@ -17,7 +17,7 @@ import { GraphQLJSON } from "graphql-type-json";
       autoSchemaFile: true,
       driver: ApolloDriver,
       buildSchemaOptions: {
-        dateScalarMode: "timestamp",
+        // dateScalarMode: "timestamp",
         resolvers: { JSON: GraphQLJSON },
       },
     }),
