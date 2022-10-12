@@ -1,8 +1,8 @@
-import { Field, InputType, Int } from "@nestjs/graphql";
+import { ArgsType, Field, InputType, Int } from "@nestjs/graphql";
 import { IsDate, IsString } from "class-validator";
 
-@InputType()
-export class InputSchedule {
+@ArgsType()
+export class CreateSchedule {
   @Field()
   @IsString()
   username: string;

@@ -1,6 +1,5 @@
 import { Field, Int, ObjectType } from "@nestjs/graphql";
-import { ResultData } from "./schdule-ResultData.model";
-
+import { ResultData } from "./schdule-ResultData";
 @ObjectType()
 export class SchduleList {
   @Field(() => Int)

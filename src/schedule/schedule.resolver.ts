@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { Schedule } from "./Entities/Schedule.entity";
 import { ScheduleService } from "./schedule.service";
-import { InputSchedule } from "./dto/schedule.input";
+import { CreateSchedule } from "./dto/create-schedule.dto";
 import { UserScheduleDto } from "./dto/user-schedule.dto";
 import { SchduleList } from "./dto/schedule-List";
 
@@ -17,7 +17,7 @@ export class ScheduleResolver {
   }
 
   @Mutation(() => Schedule)
-  createSchedule(@Args("inputSchedule") inputSchedule: InputSchedule): Promise<Schedule> {
-    return this.scheduleService.createSchedule(inputSchedule);
+  createSchedule(@Args() createSchedule: CreateSchedule): Promise<Schedule> {
+    return this.scheduleService.createSchedule(createSchedule);
   }
 }

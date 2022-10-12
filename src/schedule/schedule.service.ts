@@ -2,10 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Schedule } from "./Entities/Schedule.entity";
-import { InputSchedule } from "./dto/schedule.input";
+import { CreateSchedule } from "./dto/create-schedule.dto";
 import { UserScheduleDto } from "./dto/user-schedule.dto";
 import { SchduleList } from "./dto/schedule-List";
-import { ResultData } from "./dto/schdule-ResultData.model";
+import { ResultData } from "./dto/schdule-ResultData";
 
 @Injectable()
 export class ScheduleService {
@@ -46,7 +46,7 @@ export class ScheduleService {
     return scheduleLists;
   }
 
-  async createSchedule(inputSchedule: InputSchedule): Promise<Schedule> {
-    return await this.schedule.save(inputSchedule);
+  async createSchedule(createSchedule: CreateSchedule): Promise<Schedule> {
+    return await this.schedule.save(createSchedule);
   }
 }
