@@ -2,8 +2,8 @@ import { Field, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
 export class ResultData {
-  @Field()
-  startDate: Date;
-  @Field()
-  endDate: Date;
+  @Field({ nullable: true })
+  startDate?: Date;
+  @Field({ nullable: true })
+  endDate?: Date;
 }

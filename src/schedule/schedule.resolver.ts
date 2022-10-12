@@ -12,6 +12,7 @@ export class ScheduleResolver {
   @Query(() => [SchduleList])
   async schedulefindByUser(@Args() userScheduleDto: UserScheduleDto): Promise<SchduleList[]> {
     const schedules = await this.scheduleService.findByUser(userScheduleDto);
+
     if (schedules) {
       return await this.scheduleService.calculrateSchedule(schedules);
     }
