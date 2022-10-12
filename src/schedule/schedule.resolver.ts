@@ -10,10 +10,11 @@ export class ScheduleResolver {
   constructor(private readonly scheduleService: ScheduleService) {}
 
   @Query(() => [SchduleList])
-  async findByUser(@Args() userScheduleDto: UserScheduleDto): Promise<SchduleList[]> {
+  async schedulefindByUser(@Args() userScheduleDto: UserScheduleDto): Promise<SchduleList[]> {
     const schedules = await this.scheduleService.findByUser(userScheduleDto);
-    const result = await this.scheduleService.calculrateSchedule(schedules);
-    return result;
+    if (schedules) {
+      return await this.scheduleService.calculrateSchedule(schedules);
+    }
   }
 
   @Mutation(() => Schedule)

@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Schedule } from "./Entities/Schedule.entity";
@@ -6,16 +6,19 @@ import { CreateSchedule } from "./dto/create-schedule.dto";
 import { UserScheduleDto } from "./dto/user-schedule.dto";
 import { SchduleList } from "./dto/schedule-List";
 import { ResultData } from "./dto/schdule-ResultData";
+import { UserService } from "./../user/user.service";
 
 @Injectable()
 export class ScheduleService {
   constructor(
     @InjectRepository(Schedule)
     private readonly schedule: Repository<Schedule>,
+    private readonly userService: UserService,
   ) {}
 
   async findByUser(userScheduleDto: UserScheduleDto) {
-    return await this.schedule.find({ where: { username: userScheduleDto.username } });
+    const user = await this.userService.findByUsername(userScheduleDto.username);
+    return await this.schedule.find({ where: { username: user.username } });
   }
 
   async calculrateSchedule(schedules: Schedule[]): Promise<SchduleList[]> {
@@ -47,6 +50,8 @@ export class ScheduleService {
   }
 
   async createSchedule(createSchedule: CreateSchedule): Promise<Schedule> {
+    await this.userService.findByUsername(createSchedule.username);
+    if (createSchedule.cycle < createSchedule.period) throw new BadRequestException("period cannot be greater than cycle");
     return await this.schedule.save(createSchedule);
   }
 }

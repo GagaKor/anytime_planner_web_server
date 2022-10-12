@@ -24,6 +24,12 @@ export class UserService {
     return user;
   }
 
+  async findByUsername(username: string) {
+    const user = await this.user.findOne({ where: { username } });
+    if (!user) throw new AuthenticationError("Can not found User");
+    return user;
+  }
+
   async createUser(createUser: CreateUserDto) {
     try {
       return await this.user.save(createUser);
